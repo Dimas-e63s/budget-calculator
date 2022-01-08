@@ -1,0 +1,24 @@
+<section class="budget-table">
+  <div class="budget-table__column budget-table__column--income">
+    <h2 class="budget-table__column-title">income</h2>
+    <app-budget-list-item
+      *ngFor="let income of budgetList | filterByPrice: amountType.INCOME"
+      [id]="income.id"
+      [item]="income"
+      [isIncome]="true"
+      (deleteItem)="onDeleteItem($event)"
+      (click)="updateItem(income.id)">
+    </app-budget-list-item>
+  </div>
+  <div class="budget-table__column budget-table__column--expense">
+    <h2 class="budget-table__column-title">expenses</h2>
+    <app-budget-list-item
+      *ngFor="let expense of budgetList | filterByPrice: amountType.EXPENSE"
+      [id]="expense.id"
+      [item]="expense"
+      [isIncome]="false"
+      (click)="updateItem(expense.id)"
+      (deleteItem)="onDeleteItem($event)">
+    </app-budget-list-item>
+  </div>
+</section>

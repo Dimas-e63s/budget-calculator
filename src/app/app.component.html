@@ -1,3 +1,8 @@
 <app-header></app-header>
 <app-budget [totalAmount]="totalAmount"></app-budget>
-<app-budget-inputs (addBudgetItem)="onAddBudgetItem($event)"></app-budget-inputs>
+<app-budget-form (addBudgetItem)="onAddBudgetItem($event)"></app-budget-form>
+<app-budgets-table
+  [budgetList]="budgetList"
+  (updateItemWasClicked)="setSelectedItem($event)"
+  (deleteButtonWasClicked)="onDeleteButtonWasClicked($event)"
+></app-budgets-table>

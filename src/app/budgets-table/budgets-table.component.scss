@@ -1,0 +1,41 @@
+@import "../shared/mixins";
+
+.budget-table {
+  width: 520px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+
+  &__column {
+    flex: 1;
+
+    & + & {
+      margin-left: 20px;
+    }
+
+    $target: '.budget-table';
+
+    &--income {
+      #{$target}__column-title {
+        color: #02e790;
+        border-radius: 4px;
+      }
+    }
+
+    &--expense {
+      #{$target}__column-title {
+        color: #ff4040;
+        border-radius: 4px;
+      }
+
+    }
+  }
+
+  &__column-title {
+    display: inline-block;
+    font: 700 18px 'Lato', sans-serif;
+    text-transform: uppercase;
+    margin-top: 0;
+    margin-bottom: 20px;
+  }
+}
