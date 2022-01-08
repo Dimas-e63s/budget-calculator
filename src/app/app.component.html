@@ -6,3 +6,9 @@
   (updateItemWasClicked)="setSelectedItem($event)"
   (deleteButtonWasClicked)="onDeleteButtonWasClicked($event)"
 ></app-budgets-table>
+<app-modal
+  *ngIf="isModalVisible$ | async"
+  [selectedItem]="selectedItem"
+  (closeModalClick)="closeModal()"
+  (updateBudgetItem)="onUpdateBudgetItem($event)"
+></app-modal>

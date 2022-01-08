@@ -1,0 +1,19 @@
+<div class="modal-overlay" (click)="closeModalWindow()"></div>
+<div class="modal">
+  <h2 class="modal__title">Edit</h2>
+  <form class="modal__form" [formGroup]="form" (ngSubmit)="emitUpdatedItem()">
+    <input
+      type="number"
+      class="modal__amount-input"
+      placeholder="Amount"
+      formControlName="amount"
+    >
+    <input
+      type="text"
+      class="modal__description-input"
+      placeholder="Description"
+      formControlName="description"
+    >
+    <button class="modal__submit-button" type="submit" [disabled]="form.invalid">Save</button>
+  </form>
+</div>
