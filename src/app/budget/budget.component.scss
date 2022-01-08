@@ -1,0 +1,17 @@
+@import '../shared/mixins';
+
+.budget-total {
+  &__container {
+    height: 200px;
+    background-color: #0e1111;
+    @include flex-center();
+  }
+  &__amount {
+    font: 300 46px 'Lato', serif;
+    color: #00fa9a;
+
+    &--negative {
+      color: #ff4040;
+    }
+  }
+}

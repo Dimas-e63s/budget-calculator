@@ -1,0 +1,8 @@
+<section class="budget-total__container">
+  <span
+    class="budget-total__amount"
+    [ngClass]="{'budget-total__amount--negative': isTotalAmountNegative()}"
+  >
+    {{totalAmount}}
+  </span>
+</section>
