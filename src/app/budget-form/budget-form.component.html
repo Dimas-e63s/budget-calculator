@@ -1,0 +1,25 @@
+<section class="budget-controls__container">
+  <form
+    class="budget-controls__form"
+    [formGroup]="form"
+    (ngSubmit)="addItem()">
+    <input
+      type="number"
+      class="budget-controls__amount-input"
+      placeholder="Amount"
+      formControlName="amount">
+    <input
+      type="text"
+      class="budget-controls__description-input"
+      placeholder="Description"
+      formControlName="description">
+    <button
+      class="budget-controls__submit-button"
+      [ngClass]="{'budget-controls__submit-button--disabled': form.invalid}"
+      type="submit"
+      [disabled]="form.invalid"
+    >
+      Add
+    </button>
+  </form>
+</section>

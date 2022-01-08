@@ -1,4 +1,5 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {BudgetItem} from './models/budget.model';
 
 @Component({
   selector: 'app-root',
@@ -12,5 +13,14 @@ export class AppComponent {
 
   private calculateTotalAmount(): number {
     return this.budgetList.reduce((curr, item) => curr += item.amount, 0);
+  }
+
+  private updateTotalAmount(val): void {
+    this.totalAmount += val;
+  }
+
+  onAddBudgetItem(item: BudgetItem): void {
+    this.budgetList = [...this.budgetList, {...item, id: Date.now()}];
+    this.updateTotalAmount(item.amount);
   }
 }
