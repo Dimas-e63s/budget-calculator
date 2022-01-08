@@ -1,0 +1,13 @@
+@import '../shared/mixins';
+
+.header {
+  height: 60px;
+  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(242,129,216,1) 00%, rgba(146,252,255,1) 100%);
+  @include flex-center();
+
+  &__title {
+    margin: 0;
+    font: 500 18px 'Roboto', serif;
+    text-transform: uppercase;
+  }
+}
