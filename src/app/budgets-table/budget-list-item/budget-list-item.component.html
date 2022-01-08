@@ -1,0 +1,5 @@
+<div class="budget-table__item" [ngClass]="itemClassName">
+  <span class="budget-table__item-description">{{item.description}}</span>
+  <span class="budget-table__item-amount">{{item.amount}}</span>
+  <span class="budget-table__item-delete-btn" (click)="onDeleteItem(item)"></span>
+</div>

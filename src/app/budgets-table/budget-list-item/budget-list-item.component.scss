@@ -1,0 +1,69 @@
+@import "../../shared/mixins";
+
+.budget-table__item {
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  border-radius: 4px;
+  background-color: #f3f3f3;
+  $target: '.budget-table__item';
+  margin-bottom: 15px;
+
+  &-delete-btn {
+    position: absolute;
+    cursor: pointer;
+    width: 34px;
+    height: 34px;
+    top: -17px;
+    right: -17px;
+    background-color: #0e1111;
+    background-image: url('../../../assets/delete_icon.svg');
+    background-repeat: no-repeat;
+    background-position: 50%;
+    border-radius: 50%;
+    transform: scale(0);
+  }
+
+  &:hover {
+    .budget-table__item-delete-btn {
+      transition: transform .3s ease-out;
+      transform: scale(1);
+    }
+  }
+
+  &--income {
+    #{$target}-description,
+    #{$target}-amount {
+      color: #02e790;
+      border-radius: 4px;
+    }
+
+    #{$target}-amount {
+      padding: 5px 3px;
+      background: #99ffd5;
+    }
+  }
+
+  &--expense {
+    #{$target}-description,
+    #{$target}-amount {
+      color: #ff4040;
+      border-radius: 4px;
+    }
+
+    #{$target}-amount {
+      padding: 5px 4px;
+      background: #fad8d8;
+    }
+  }
+
+  &-description {
+    font: 300 16px 'Lato';
+  }
+}
+
+
+
