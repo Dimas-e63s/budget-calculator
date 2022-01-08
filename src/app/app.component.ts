@@ -1,6 +1,5 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {BudgetItem} from './models/budget.model';
-import {BehaviorSubject} from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +11,7 @@ export class AppComponent {
   budgetList = [{description: 'adf', amount: 23, id: 1}, {description: 'sdaf', amount: -2, id: 2}];
   totalAmount = this.calculateTotalAmount();
   selectedItem: BudgetItem = null;
-  isModalVisible$ = new BehaviorSubject<boolean>(false);
+  isModalVisible = false;
 
   private calculateTotalAmount(): number {
     return this.budgetList.reduce((curr, item) => curr += item.amount, 0);
@@ -22,20 +21,24 @@ export class AppComponent {
     this.totalAmount += val;
   }
 
-  private getOppositeNumber(num: number): number {
+  private changeNumberSign(num: number): number {
     return num * -1;
   }
 
   private openModal(): void {
-    this.isModalVisible$.next(true);
+    this.isModalVisible = true;
+  }
+
+  private getUniqueItemId(): number {
+    return Date.now();
   }
 
   closeModal(): void {
-    this.isModalVisible$.next(false);
+    this.isModalVisible = false;
   }
 
   onAddBudgetItem(item: BudgetItem): void {
-    this.budgetList = [...this.budgetList, {...item, id: Date.now()}];
+    this.budgetList = [...this.budgetList, {...item, id: this.getUniqueItemId()}];
     this.updateTotalAmount(item.amount);
   }
 
@@ -46,24 +49,38 @@ export class AppComponent {
 
   onDeleteButtonWasClicked(deleteItem: BudgetItem): void {
     this.budgetList = this.budgetList.filter(item => item.id !== deleteItem.id);
-    this.updateTotalAmount(this.getOppositeNumber(deleteItem.amount));
+    this.updateTotalAmount(this.changeNumberSign(deleteItem.amount));
   }
 
-    onUpdateBudgetItem(updatedItem: BudgetItem): void {
-    const updateFn = (item: BudgetItem) => {
-      if (item.id === updatedItem.id) {
-        if (item.amount !== updatedItem.amount) {
-          this.updateTotalAmount(this.getOppositeNumber(item.amount));
-          this.updateTotalAmount(updatedItem.amount);
-        }
+  private isItemAmountChanged(updatedAmount: number, oldAmount: number): boolean {
+    return updatedAmount !== oldAmount;
+  }
 
-        return {
-          ...updatedItem
-        };
-      }
+  private updateTotalAmountWithChangedItem(amount: number, oldItemAmount: number): void {
+    // extract old value from sum and add new value
+    // ex. sum = 12, new = 10, old = -2
+    // sum += 2 --> 14
+    // sum += 10 --> 24
+    this.updateTotalAmount(this.changeNumberSign(oldItemAmount));
+    this.updateTotalAmount(amount);
+  }
 
-      return item;
+  getUpdatedItemCopy(
+    {amount: newItemAmount, ...updatedItem}: BudgetItem,
+    {amount: oldItemAmount}: BudgetItem
+  ): BudgetItem {
+    if (this.isItemAmountChanged(newItemAmount, oldItemAmount)) {
+      this.updateTotalAmountWithChangedItem(newItemAmount, oldItemAmount);
+    }
+
+    return {
+      amount: newItemAmount,
+      ...updatedItem
     };
+  }
+
+  onUpdateBudgetItem(updatedItem: BudgetItem): void {
+    const updateFn = (item: BudgetItem) => item.id === updatedItem.id ? this.getUpdatedItemCopy(updatedItem, item) : item;
     this.budgetList = this.budgetList.map(updateFn);
   }
 }
